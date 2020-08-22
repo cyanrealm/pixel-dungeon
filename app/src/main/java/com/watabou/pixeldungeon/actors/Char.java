@@ -280,6 +280,8 @@ public abstract class Char extends Actor {
 				Integer.toString( dmg ) );
 		}
 		if (HP <= 0) {
+
+
 			die( src );
 		}
 	}

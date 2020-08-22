@@ -49,7 +49,7 @@ public class InterlevelScene extends PixelScene {
 	private static final String ERR_GENERIC			= "Something went wrong..."	;	
 	
 	public static enum Mode {
-		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, NONE
+		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, NONE, MOVE
 	};
 	public static Mode mode;
 	
@@ -133,6 +133,9 @@ public class InterlevelScene extends PixelScene {
 						break;
 					case FALL:
 						fall();
+						break;
+					case MOVE:
+						move();
 						break;
 					default:
 					}
@@ -261,7 +264,34 @@ public class InterlevelScene extends PixelScene {
 		Level level = Dungeon.loadLevel( Dungeon.hero.heroClass );
 		Dungeon.switchLevel( level, Level.resizingNeeded ? level.adjustPos( returnPos ) : returnPos );
 	}
-	
+
+	//Move to specific location
+	private void move() throws Exception {
+
+		Actor.fixTime();
+		if (Dungeon.hero == null) {
+			Dungeon.init();
+			if (noStory) {
+				Dungeon.chapters.add( WndStory.ID_SEWERS );
+				noStory = false;
+			}
+			GameLog.wipe();
+		} else {
+			Dungeon.saveLevel();
+		}
+
+		//Level level;
+		//if (Dungeon.depth >= Statistics.deepestFloor) {
+		//	level = Dungeon.newLevel();
+		//} else {
+		//	Dungeon.depth++;
+		//	level = Dungeon.loadLevel( Dungeon.hero.heroClass );
+		//}
+		Level level;
+		level = Dungeon.existingLevel();
+		Dungeon.switchLevel( level, level.entrance );
+	}
+
 	private void restore() throws Exception {
 		
 		Actor.fixTime();

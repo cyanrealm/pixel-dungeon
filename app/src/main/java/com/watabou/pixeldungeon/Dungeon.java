@@ -58,6 +58,7 @@ import com.watabou.pixeldungeon.levels.PrisonLevel;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.levels.SewerBossLevel;
 import com.watabou.pixeldungeon.levels.SewerLevel;
+import com.watabou.pixeldungeon.levels.TestLevel;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.StartScene;
 import com.watabou.pixeldungeon.ui.QuickSlot;
@@ -227,7 +228,22 @@ public class Dungeon {
 		
 		return level;
 	}
-	
+
+	//Get to existing level
+	public static Level existingLevel() {
+
+		Dungeon.level = null;
+		Actor.clear();
+
+		//Init level
+		Level level;
+
+		level = new TestLevel();
+		level.create();
+
+		return level;
+	}
+
 	public static void resetLevel() {
 		
 		Actor.clear();
@@ -535,7 +551,8 @@ public class Dungeon {
 			}
 		}
 	}
-	
+
+	//Load level
 	public static Level loadLevel( HeroClass cl ) throws IOException {
 		
 		Dungeon.level = null;

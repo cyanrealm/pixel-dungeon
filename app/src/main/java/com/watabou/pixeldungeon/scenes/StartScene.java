@@ -153,8 +153,8 @@ public class StartScene extends PixelScene {
 				Game.switchScene( InterlevelScene.class );
 			}
 		};
-		add( btnLoad );	
-		
+		add( btnLoad );
+
 		float centralHeight = buttonY - title.y - title.height();
 		
 		HeroClass[] classes = {
@@ -300,8 +300,9 @@ public class StartScene extends PixelScene {
 	private void startNewGame() {
 
 		Dungeon.hero = null;
-		InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-		
+		//InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+		InterlevelScene.mode = InterlevelScene.Mode.MOVE;
+
 		if (PixelDungeon.intro()) {
 			PixelDungeon.intro( false );
 			Game.switchScene( IntroScene.class );

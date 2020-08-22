@@ -732,7 +732,7 @@ public class Hero extends Char {
 		int stairs = action.dst;
 		if (pos == stairs && pos == Dungeon.level.entrance) {
 			
-			if (Dungeon.depth == 1) {
+			if (Dungeon.depth == 0) {
 				
 				if (belongings.getItem( Amulet.class ) == null) {
 					GameScene.show( new WndMessage( TXT_LEAVE ) );
@@ -1137,9 +1137,9 @@ public class Hero extends Char {
 		return stealth;
 	}
 	
-	@Override
-	public void die( Object cause  ) {
-		
+
+	public void die_obsolated( Object cause  ) {
+
 		curAction = null;
 		
 		DewVial.autoDrink( this );
@@ -1161,6 +1161,28 @@ public class Hero extends Char {
 			Dungeon.deleteGame( Dungeon.hero.heroClass, false );
 			GameScene.show( new WndResurrect( ankh, cause ) );
 			
+		}
+	}
+
+	@Override
+	public void die( Object cause  ) {
+		//CY:Move character back to floor 0:WIP
+		curAction = null;
+
+		Actor.fixTime();
+
+		try {
+			//Dungeon.saveLevel();
+			Dungeon.depth = 0;
+			//Switch to level 0
+			InterlevelScene.mode = InterlevelScene.Mode.MOVE;
+			Game.switchScene( InterlevelScene.class );
+			//Set HP =1
+			HP = 1;
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
